@@ -78,21 +78,25 @@ def saver():
 # -----------------------------SEARCHING--------------------------------#
 
 def search():
-    with open("data.json", "r") as data_file:
-        data = json.load(data_file)
-        website_name = website_input.get()
-        email_name = email_input.get()
-        # print(data[f"{website_name}"]["email"])
-        if data[f"{website_name}"]["email"] == email_name:
-            messagebox.showinfo(title="Website found in Archive", message=f"Website Name: {website_name}\n"
-                                     f"Email address: {email_name}\n"
-                                     f"Password: {data[f'{website_name}']['password']}\n"
-                                     "Your password was copied to the clipboard.")
-            pyperclip.copy(data[f'{website_name}']['password'])
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+            website_name = website_input.get()
+            email_name = email_input.get()
+            # print(data[f"{website_name}"]["email"])
+            if data[f"{website_name}"]["email"] == email_name:
+                messagebox.showinfo(title="Website found in Archive", message=f"Website Name: {website_name}\n"
+                                         f"Email address: {email_name}\n"
+                                         f"Password: {data[f'{website_name}']['password']}\n"
+                                         "Your password was copied to the clipboard.")
+                pyperclip.copy(data[f'{website_name}']['password'])
 
-        else:
-            messagebox.showerror(title="Password not Found", message="This website and it's password was not found\n"
-                                                                     "Try searching for something else.")
+            else:
+                messagebox.showerror(title="Password not Found", message="This website and it's password was not found\n"
+                                                                         "Try searching for something else.")
+        data_file.close()
+    except FileNotFoundError:
+        messagebox.showerror(title="No database found.", message="You have no stored passwords in your database. Try adding some.")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
