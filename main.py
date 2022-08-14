@@ -77,6 +77,7 @@ def saver():
 
 # -----------------------------SEARCHING--------------------------------#
 
+
 def search():
     try:
         with open("data.json", "r") as data_file:
