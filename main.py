@@ -49,13 +49,12 @@ def saver():
                                                              "Try again.")
 
     else:
-        # is_ok = messagebox.askokcancel(title=website_name,
-        #                                message=f"These are the details entered: Website: {website_name}"
-        #                                        f"\nEmail: {email_name}"
-        #                                        f"\nPassword: {password_name} \nIs it ok to save?")
-        #
-        # if is_ok:
-        #     f.write(f"{website_name} / {email_name} / {password_name}\n")
+        is_ok = messagebox.askokcancel(title=website_name,
+                                       message=f"These are the details entered: Website: {website_name}"
+                                               f"\nEmail: {email_name}"
+                                               f"\nPassword: {password_name} \nIs it ok to save?")
+
+        if is_ok:
             try:
                 with open("data.json", "r") as data_file:
                     data = json.load(data_file)
@@ -65,10 +64,11 @@ def saver():
                         json.dump(data, data_file, indent=4)
                         data_file.close()
             except:
-                print("File Empty!")
-                f = open("data.json", "w")
-                json.dump(new_data, f, indent=4)
-                f.close()
+                if is_ok:
+                    print("File Empty!")
+                    f = open("data.json", "w")
+                    json.dump(new_data, f, indent=4)
+                    f.close()
             finally:
                 website_input.delete(0, END)
                 email_input.delete(0, END)
